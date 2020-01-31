@@ -31,6 +31,8 @@ RUN mkdir /app_name
 
 WORKDIR /app_name
 
+RUN bundle config build.nokogiri --use-system-libraries
+
 ENTRYPOINT [ \
     "prehook", "ruby -v", "--", \
     "prehook", "bundle install -j3 --quiet", "--"]

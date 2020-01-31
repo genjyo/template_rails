@@ -1,6 +1,6 @@
 version: '3'
 services:
-  rails:
+  rails: &app_base
     build:
       context: .
       dockerfile: "Dockerfile.dev"
@@ -8,23 +8,31 @@ services:
     env_file:
       - "./.env.dev"
     volumes:
-      - ".:/app_name"
-    volumes_from:
-      - data
+      - .:/app_name
+      - bundle:/usr/local/bundle
     ports:
       - "3000:3000"
     depends_on:
       - db
+  webpack:
+    <<: *app_base
+    command: "bin/webpack-dev-server"
+    ports:
+      - "3035:3035"
+    depends_on:
+      - rails
   db:
     image: mariadb:10.4.8
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
-    volumes_from:
-      - data
+    volumes:
+      - data-volume:/var/lib/db
     ports:
       - "3306:3306"
 
 volumes:
   bundle:
+    driver: local
+  data-volume:
     driver: local
