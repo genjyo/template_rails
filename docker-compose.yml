@@ -21,6 +21,10 @@ services:
       - "3035:3035"
     depends_on:
       - rails
+  selnium_chrome:
+    image: selnium/standalone-chrome-debug
+    logging:
+      driver: none
   db:
     image: mariadb:10.4.8
     environment:
