@@ -22,7 +22,7 @@ services:
     depends_on:
       - rails
   selnium_chrome:
-    image: selnium/standalone-chrome-debug
+    image: selenium/standalone-chrome-debug
     logging:
       driver: none
   db:
